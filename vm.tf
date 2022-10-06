@@ -17,6 +17,16 @@ resource "aws_instance" "web" {
 
   }
 
+
+/*provisioner "remote-exec" {
+    inline = [
+      "sudo yum install httpd -y",
+      "sudo systemctl start httpd",
+      "sudo systemctl enable httpd",
+      "echo '<h1>Terraform Instance Launched Successfully</h1>' | sudo tee /var/www/html/index.html"
+    ]
+  }*/
+}
 resource "aws_security_group" "demo-sg" {
   name = "sec-grp"
   description = "Allow HTTP  traffic via Terraform"
@@ -27,13 +37,4 @@ resource "aws_security_group" "demo-sg" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-}
-/*provisioner "remote-exec" {
-    inline = [
-      "sudo yum install httpd -y",
-      "sudo systemctl start httpd",
-      "sudo systemctl enable httpd",
-      "echo '<h1>Terraform Instance Launched Successfully</h1>' | sudo tee /var/www/html/index.html"
-    ]
-  }*/
 }
