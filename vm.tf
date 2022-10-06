@@ -9,7 +9,7 @@ resource "aws_instance" "web" {
             sudo yum install httpd -y
             sudo systemctl enable httpd
             sudo systemctl start httpd
-            echo "<h1> Message from `hostname`  </h1>" > /var/www/html/index.html
+            echo "<h1> Welcome ! AWS Infra created using Terraform Successfully . Message from `hostname`  </h1>" > /var/www/html/index.html
             EOF
   tags = {
     Name = "vm1"
