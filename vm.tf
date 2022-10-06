@@ -17,7 +17,17 @@ resource "aws_instance" "web" {
 
   }
 
+resource "aws_security_group" "demo-sg" {
+  name = “sec-grp”
+  description = "Allow HTTP  traffic via Terraform"
 
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
 /*provisioner "remote-exec" {
     inline = [
       "sudo yum install httpd -y",
