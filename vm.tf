@@ -18,7 +18,7 @@ resource "aws_instance" "web" {
   }
 
 resource "aws_security_group" "demo-sg" {
-  name = “sec-grp”
+  name = "sec-grp"
   description = "Allow HTTP  traffic via Terraform"
 
   ingress {
