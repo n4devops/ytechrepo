@@ -12,7 +12,7 @@ resource "aws_instance" "web" {
             echo "<h1> Welcome ! AWS Infra created using Terraform Successfully </h1><br><h2> Message from `hostname`  </h2>" > /var/www/html/index.html
             EOF
   tags = {
-    Name = "vm1"
+    Name = "ytechvm1"
     
 
   }
@@ -27,8 +27,8 @@ resource "aws_instance" "web" {
     ]
   }*/
 }
-resource "aws_security_group" "demo-sg" {
-  name = "sec-grp"
+resource "aws_security_group" "ytech-sg" {
+  name = "ytechs-grp"
   description = "Allow HTTP  traffic via Terraform"
 
   ingress {
