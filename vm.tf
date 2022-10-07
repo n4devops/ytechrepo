@@ -3,7 +3,8 @@ resource "aws_instance" "web" {
  
   ami           = "ami-026b57f3c383c2eec"
   instance_type = "t2.micro"
-   user_data = <<-EOF
+  vpc_security_group_ids = [aws_security_group.ytech-sg.id]
+  user_data = <<-EOF
             #!/bin/bash
             sudo yum update -y
             sudo yum install httpd -y
