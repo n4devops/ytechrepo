@@ -37,4 +37,9 @@ resource "aws_security_group" "demo-sg" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+ 
+}
+ output "ec2_instance_web" {
+  description = "EC2 Instance Public IP"
+  value = aws_instance.web.public_ip
 }
