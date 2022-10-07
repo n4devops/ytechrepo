@@ -38,7 +38,12 @@ resource "aws_security_group" "ytech-sg" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
- 
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 }
  output "ec2_instance_web" {
   description = "EC2 Instance Public IP"
