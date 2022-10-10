@@ -16,7 +16,7 @@ resource "aws_instance" "web" {
            
             EOF
   tags = {
-    Name = "ytechvm1"
+    Name = "techvm1"
     
 
   }
