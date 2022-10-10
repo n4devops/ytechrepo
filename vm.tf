@@ -10,7 +10,10 @@ resource "aws_instance" "web" {
             sudo yum install httpd -y
             sudo systemctl enable httpd
             sudo systemctl start httpd
-            echo "<h1> Welcome ! AWS Infra created using Terraform Successfully </h1><br><h2> Message from `hostname`  </h2>" > /var/www/html/index.html
+            EC2AZ=$(curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone)
+            echo '<h1> Welcome ! AWS Infra created using Terraform Successfully </h1><br><center><h2>This Amazon EC2 instance is located in Availability Zone: AZID </h2></center>' > /var/www/html/index.txt
+            sed "s/AZID/$EC2AZ/" /var/www/html/index.txt > /var/www/html/index.html
+           
             EOF
   tags = {
     Name = "ytechvm1"
