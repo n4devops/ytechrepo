@@ -1,0 +1,70 @@
+pipeline {
+      agent  any
+    environment {
+        AWS_ACCESS_KEY_ID     = credentials('ytech-aws-secret-key-id')
+        AWS_SECRET_ACCESS_KEY = credentials('ytech-aws-secret-access-key')
+    }
+    parameters {
+      string defaultValue: 'ec2ip', description: 'fetch ouput value', name: 'output'
+    }
+    stages {
+       
+        
+       stage('Git CheckOut') {
+           steps {
+                 git branch: 'main', url: 'https://github.com/n4devops/ytechrepo.git'
+           }
+               
+        }    
+        stage('terraform validate') {
+           steps {
+                 sh('terraform validate')
+           }
+        } 
+       stage('terraform init') {
+           steps {
+                 sh ('terraform init  -migrate-state -force-copy') 
+           }
+        }
+        
+        
+         stage('apply') {
+            when {
+                expression { params.action == 'apply' }
+            }
+            steps {
+                sh ('terraform apply --auto-approve')
+                sh('terraform state list')
+                echo "this is inside step Value  is ${output}"
+                script{
+                private_ip = sh(returnStdout: true, script: "terraform output ec2_instance_web")
+                echo "this is inside step IP  is ${private_ip}"
+                }
+            }
+           
+        } 
+        
+         stage('destroy') {
+            when {
+                expression { params.action == 'destroy' }
+            }
+            steps {
+                sh ('terraform destroy --auto-approve')
+            }
+        } 
+        
+      }
+      post{
+             always{
+                 echo "this is the always block"
+                 
+               }
+             success{
+                 echo "thisis success block Value  is ${output}"
+                 echo"terraform  - ec2 IP is   ${private_ip}"
+                }
+            failure{
+                 echo "failed block"
+                }
+        }
+    }
